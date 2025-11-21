@@ -1,0 +1,28 @@
+[11/21/2025-10:47:28] [TRT] [W] The getMaxBatchSize() function should not be used with an engine built from a network created with NetworkDefinitionCreationFlag::kEXPLICIT_BATCH flag. This function will always return 1.
+[11/21/2025-10:47:28] [TRT] [W] The getMaxBatchSize() function should not be used with an engine built from a network created with NetworkDefinitionCreationFlag::kEXPLICIT_BATCH flag. This function will always return 1.
+[⏱️] 引擎加载耗时: 480.56 ms
+✅ 检测到模型输入 shape: (1, 3, 224, 224)
+[⏱️] 缓冲区分配耗时: 1.80 ms
+🖼️ 加载图像: cat.jpg
+[⏱️] 输入准备耗时: 51.04 ms
+🔥 预热中...
+[⏱️] 预热耗时 (5 次): 126.28 ms
+🚀 开始正式推理 (10000 次)...
+
+🎯 Top-3 预测结果:
+ 1. Egyptian Mau (prob=14.8044)
+ 2. tabby cat (prob=12.9108)
+ 3. tiger cat (prob=11.3615)
+
+==================================================
+[⏱️] 耗时汇总:
+   引擎加载:      已在 load_engine 中打印
+   缓冲区分配:    已在 allocate_buffers 中打印
+   输入准备:      51.04 ms
+   预热 (5 次):   126.28 ms
+   正式推理 (10000 次): 25082.09 ms
+   —— 平均每次:   2.51 ms
+   总耗时 (端到端): 25866.74 ms
+==================================================
+
+✅ 推理完成！请配合 `sudo tegrastats` 确认 DLA 是否工作。
