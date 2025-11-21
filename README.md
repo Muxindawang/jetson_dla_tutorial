@@ -1,3 +1,46 @@
+## myself test demo
+
+
+
+```shell
+# 训练模型
+python3 train.py model_bn --checkpoint_path=data/model_bn.pth
+# 导出onnx
+python3 export.py model_bn data/model_bn.onnx --checkpoint_path=data/model_bn.pth
+# 导出int8 engine
+python3 build.py data/model_bn.onnx --output=data/model_bn.engine --int8 --dla_core=0 --gpu_fallback --batch_size=32
+# 推理
+python3 infer.py data/model_bn.engine --batch_size 32 --num_batches 1000
+```
+
+另起一个终端（在orin的host 而非container中），监控DLA使用情况
+
+```shell
+# 监控dla
+sudo tegrastats --interval 100 | grep -i dla
+
+输出
+
+11-21-2025 08:49:48 RAM 13983/62780MB (lfb 424x4MB) SWAP 126/31390MB (cached 0MB) CPU [90%@2201,100%@2201,100%@2201,100%@2201,100%@2201,100%@2201,100%@2201,100%@2201,100%@2201,100%@2201,100%@2201,100%@2201] EMC_FREQ 1%@2133 GR3D_FREQ 14%@[407,407] VIC_FREQ 115 NVDLA0_FREQ @1600 APE 174 CV0@73.625C CPU@77.281C Tboard@62C SOC2@70C Tdiode@62.25C SOC0@69.531C CV1@72.5C GPU@69.125C tj@77.281C SOC1@68.968C CV2@67.25C VDD_GPU_SOC 3150mW/2971mW VDD_CPU_CV 14312mW/12415mW VIN_SYS_5V0 4968mW/5048mW VDDQ_VDD2_1V8AO 1091mW/1091mW
+
+NVIDIA Deep Learning Accelerator Core 0 正在以 1600 MHz 运行
+GPU（即 NVIDIA Ampere GPU）使用率：14%，频率407
+
+```
+
+```shell
+# c++版本
+mkdir build
+cd build
+cmake ..
+make
+./infer ../data/model_bn.engine
+```
+
+
+
+
+
 <!-- 
 SPDX-FileCopyrightText: Copyright (c) 2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 SPDX-License-Identifier: MIT
